@@ -8,7 +8,14 @@ public static class RockPaperScissors
       .Select(ScoreRound)
       .Sum();
   }
-  
+
+  public static int ScoreTournamentWithNewStrategy(IEnumerable<string> inputLines)
+  {
+    return inputLines
+      .Select(ScoreRoundWithNewStrategy)
+      .Sum();
+  }
+
   public static int ScoreRound(string round)
   {
     var opponentsShape = round.First();
@@ -20,6 +27,14 @@ public static class RockPaperScissors
     return shapeScore + resultScore;
   }
 
+  public static int ScoreRoundWithNewStrategy(string round)
+  {
+    var opponentsShape = round.First();
+    var myShape = round.Last();
+
+    return GetScoreForNewStrategy(opponentsShape, myShape);
+  }
+
   private static int GetValue(char shape)
   {
     return shape switch
@@ -27,6 +42,23 @@ public static class RockPaperScissors
       'A' or 'X' => 1,
       'B' or 'Y' => 2,
       'C' or 'Z' => 3,
+      _ => throw new ArgumentException("Invalid shape")
+    };
+  }
+
+  private static int GetScoreForNewStrategy(char opponentsShape, char myShape)
+  {
+    return (opponentsShape, myShape) switch
+    {
+      ('A', 'X') => 0 + 3,
+      ('A', 'Y') => 3 + 1,
+      ('A', 'Z') => 6 + 2,
+      ('B', 'X') => 0 + 1,
+      ('B', 'Y') => 3 + 2,
+      ('B', 'Z') => 6 + 3,
+      ('C', 'X') => 0 + 2,
+      ('C', 'Y') => 3 + 3,
+      ('C', 'Z') => 6 + 1,      
       _ => throw new ArgumentException("Invalid shape")
     };
   }

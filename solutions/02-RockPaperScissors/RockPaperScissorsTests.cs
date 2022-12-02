@@ -41,6 +41,39 @@ public class RockPaperScissorsTests : IClassFixture<InputFilesFixture>
 
     actualScore.Should().Be(expectedScore);
   }
+
+  [Theory]
+  [InlineData("A Y", 4)]
+  [InlineData("B X", 1)]
+  [InlineData("C Z", 7)]
+  public void ShouldScoreARoundWithNewStrategy(string round, int expectedScore)
+  {
+    int roundScore = RockPaperScissors.ScoreRoundWithNewStrategy(round);
+
+    roundScore.Should().Be(expectedScore);
+  }
+
+  [Fact]
+  public void ShouldScoreATournamentWithNewStrategyWithTestInput()
+  {
+    IEnumerable<string> inputLines = _fixture.TestInput;
+    int expectedScore = 12;
+
+    int actualScore = RockPaperScissors.ScoreTournamentWithNewStrategy(inputLines);
+
+    actualScore.Should().Be(expectedScore);
+  }
+
+  [Fact]
+  public void ShouldScoreATournamentWithNewStrategyWithSolutionInput()
+  {
+    IEnumerable<string> inputLines = _fixture.SolutionInput;
+    int expectedScore = 10560;
+
+    int actualScore = RockPaperScissors.ScoreTournamentWithNewStrategy(inputLines);
+
+    actualScore.Should().Be(expectedScore);
+  }
 }
 
 public class InputFilesFixture : IAsyncLifetime
