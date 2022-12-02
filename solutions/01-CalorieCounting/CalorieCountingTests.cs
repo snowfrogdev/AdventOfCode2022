@@ -10,11 +10,41 @@ public class CalorieCountingTests : IClassFixture<InputFilesFixture>
   }
 
   [Fact]
-  public async void ShouldConvertInputFileLinesToIEnumerableOfString()
+  public void ShouldCreateElfCollection()
   {
+    IEnumerable<string> inputLines = _fixture.TestInput;
+    
+    Elves elves = Elves.From(inputLines);
 
-    IEnumerable<string> actualLines = await InputFileConverter.GetLinesAsync("01-test-input.txt");
-    actualLines.Should().Equal(expectedLines);
+    elves[0].Calories.Should().Equal(new int[] { 1000, 2000, 3000 });
+    elves[1].Calories.Should().Equal(new int[] { 4000 });
+    elves[2].Calories.Should().Equal(new int[] { 5000, 6000 });
+    elves[3].Calories.Should().Equal(new int[] { 7000, 8000, 9000 });
+    elves[4].Calories.Should().Equal(new int[] { 10000 });
+  }
+
+  [Fact]
+  public void ShouldFindCaloriesCarriedByElfCarryingTheMostCaloriesInTestInput()
+  {
+    IEnumerable<string> inputLines = _fixture.TestInput;
+    int expectedCalories = 24000;
+    var elves = Elves.From(inputLines);
+
+    int actualCalories = elves.Select(elf => elf.TotalCalories()).Max();
+
+    actualCalories.Should().Be(expectedCalories);
+  }
+
+  [Fact]
+  public void ShouldFindCaloriesCarriedByElfCarryingTheMostCaloriesInSolutionInput()
+  {
+    IEnumerable<string> inputLines = _fixture.SolutionInput;
+    int expectedCalories = 70698;
+    var elves = Elves.From(inputLines);
+
+    int actualCalories = elves.Select(elf => elf.TotalCalories()).Max();
+
+    actualCalories.Should().Be(expectedCalories);
   }
 }
 
