@@ -13,7 +13,7 @@ public class CalorieCountingTests : IClassFixture<InputFilesFixture>
   public void ShouldCreateElfCollection()
   {
     IEnumerable<string> inputLines = _fixture.TestInput;
-    
+
     Elves elves = Elves.From(inputLines);
 
     elves[0].Calories.Should().Equal(new int[] { 1000, 2000, 3000 });
@@ -54,12 +54,12 @@ public class CalorieCountingTests : IClassFixture<InputFilesFixture>
     int expectedCalories = 45000;
     var elves = Elves.From(inputLines);
 
-     int actualCalories = elves
-      .Select(elf => elf.TotalCalories())
-      .OrderDescending()
-      .Take(3)
-      .Sum();
-     
+    int actualCalories = elves
+     .Select(elf => elf.TotalCalories())
+     .OrderDescending()
+     .Take(3)
+     .Sum();
+
 
     actualCalories.Should().Be(expectedCalories);
   }
@@ -71,12 +71,12 @@ public class CalorieCountingTests : IClassFixture<InputFilesFixture>
     int expectedCalories = 206643;
     var elves = Elves.From(inputLines);
 
-     int actualCalories = elves
-      .Select(elf => elf.TotalCalories())
-      .OrderDescending()
-      .Take(3)
-      .Sum();
-     
+    int actualCalories = elves
+     .Select(elf => elf.TotalCalories())
+     .OrderDescending()
+     .Take(3)
+     .Sum();
+
 
     actualCalories.Should().Be(expectedCalories);
   }
