@@ -46,6 +46,40 @@ public class CalorieCountingTests : IClassFixture<InputFilesFixture>
 
     actualCalories.Should().Be(expectedCalories);
   }
+
+  [Fact]
+  public void ShouldFindTheTopThreeElvesCarryingTheMostCaloriesInTestIntput()
+  {
+    IEnumerable<string> inputLines = _fixture.TestInput;
+    int expectedCalories = 45000;
+    var elves = Elves.From(inputLines);
+
+     int actualCalories = elves
+      .Select(elf => elf.TotalCalories())
+      .OrderDescending()
+      .Take(3)
+      .Sum();
+     
+
+    actualCalories.Should().Be(expectedCalories);
+  }
+
+  [Fact]
+  public void ShouldFindTheTopThreeElvesCarryingTheMostCaloriesInSolutionIntput()
+  {
+    IEnumerable<string> inputLines = _fixture.SolutionInput;
+    int expectedCalories = 206643;
+    var elves = Elves.From(inputLines);
+
+     int actualCalories = elves
+      .Select(elf => elf.TotalCalories())
+      .OrderDescending()
+      .Take(3)
+      .Sum();
+     
+
+    actualCalories.Should().Be(expectedCalories);
+  }
 }
 
 public class InputFilesFixture : IAsyncLifetime
