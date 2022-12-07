@@ -59,7 +59,7 @@ public class TuningTroubleTests : IClassFixture<InputFilesFixture>
   [InlineData("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 11)]
   public void ShouldReturnIndexOfStartOfPacket(string input, int expected)
   {
-    var result = TuningTrouble.FindStartOfPacket(input);
+    var result = input.FindStartOfPacket();
 
     result.Should().Be(expected);
   }
@@ -67,9 +67,30 @@ public class TuningTroubleTests : IClassFixture<InputFilesFixture>
   [Fact]
   public void ShouldFindStartOfPacketForSolutionInput()
   {
-    var result = TuningTrouble.FindStartOfPacket(_fixture.SolutionInput.First());
+    var result = _fixture.SolutionInput.First().FindStartOfPacket();
 
     result.Should().Be(1275);
+  }
+
+  [Theory]
+  [InlineData("mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19)]
+  [InlineData("bvwbjplbgvbhsrlpgdmjqwftvncz", 23)]
+  [InlineData("nppdvjthqldpwncqszvftbrmjlhg", 23)]
+  [InlineData("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg", 29)]
+  [InlineData("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26)]
+  public void ShouldReturnIndexOfStartOfMessage(string input, int expected)
+  {
+    var result = input.FindStartOfMessage();
+
+    result.Should().Be(expected);
+  }
+
+  [Fact]
+  public void ShouldFindStartOfMessageForSolutionInput()
+  {
+    var result = _fixture.SolutionInput.First().FindStartOfMessage();
+
+    result.Should().Be(3605);
   }
 }
 
