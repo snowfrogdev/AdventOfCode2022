@@ -39,15 +39,15 @@ public class Parser
 
   private void HandleChangeDirectory(string line)
   {
-    string name = line.Substring(5);
+    string name = line[5..];
     FileSystemItem? child = _current.FindChild(name);
-    if (child != null)
+    if (child == null)
     {
-      _current = child;
+      throw new InvalidOperationException($"Directory {name} does not exist");
     }
     else
     {
-      throw new InvalidOperationException($"Directory {name} does not exist");
+      _current = child;
     }
   }
 
