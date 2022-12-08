@@ -16,8 +16,9 @@ public class NoSpaceLeftOnDeviceTests : IClassFixture<InputFilesFixture>
   {
     new Parser()
       .Parse(_fixture.TestInput)
-      .FindDirectoriesSmallerOrEqualTo(100000)
+      .Directories()
       .Select(dir => dir.Size)
+      .Where(size => size <= 100000)
       .Sum()
       .Should().Be(95437);
   }
@@ -27,10 +28,39 @@ public class NoSpaceLeftOnDeviceTests : IClassFixture<InputFilesFixture>
   {
     new Parser()
       .Parse(_fixture.SolutionInput)
-      .FindDirectoriesSmallerOrEqualTo(100000)
+      .Directories()
       .Select(dir => dir.Size)
+      .Where(size => size <= 100000)
       .Sum()
       .Should().Be(1648397);
+  }
+
+  [Fact]
+  public void ShouldFindSizeOfDirectoryToDeleteInTestInput()
+  {
+    var fileSystem = new Parser().Parse(_fixture.TestInput);
+    var freeSpace = 70000000 - fileSystem.Size;
+    var spaceToFreeUp = 30000000 - freeSpace;
+    var directoryToDelete = fileSystem.Directories()
+      .Where(dir => dir.Size >= spaceToFreeUp)
+      .OrderBy(dir => dir.Size)
+      .First();
+
+    directoryToDelete.Size.Should().Be(24933642);
+  }
+
+  [Fact]
+  public void ShouldFindSizeOfDirectoryToDeleteInSolutionInput()
+  {
+    var fileSystem = new Parser().Parse(_fixture.SolutionInput);
+    var freeSpace = 70000000 - fileSystem.Size;
+    var spaceToFreeUp = 30000000 - freeSpace;
+    var directoryToDelete = fileSystem.Directories()
+      .Where(dir => dir.Size >= spaceToFreeUp)
+      .OrderBy(dir => dir.Size)
+      .First();
+
+    directoryToDelete.Size.Should().Be(24933642);
   }
 }
 

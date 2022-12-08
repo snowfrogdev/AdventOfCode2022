@@ -34,21 +34,20 @@ public class FileSystemItem
     }
   }
 
-  public List<FileSystemItem> FindDirectoriesSmallerOrEqualTo(int maxSize)
+  public IEnumerable<FileSystemItem> Directories()
   {
-    var result = new List<FileSystemItem>();
-
-    if (IsDirectory && Size <= maxSize)
+    if (IsDirectory)
     {
-      result.Add(this);
+      yield return this;
     }
 
     foreach (FileSystemItem child in _children)
     {
-      result.AddRange(child.FindDirectoriesSmallerOrEqualTo(maxSize));
+      foreach(FileSystemItem grandChild in child.Directories())
+      {
+        yield return grandChild;
+      }
     }
-
-    return result;
   }
 
   public FileSystemItem? FindChild(string name)
