@@ -14,27 +14,24 @@ public class Parser
   public FileSystemItem Parse(IEnumerable<string> input)
   {
     foreach (string line in input)
-    {
-      if (line.StartsWith("$ cd /"))
+    {      
+      switch(line)
       {
-        _current = _root;
-      }
-      else if (line.StartsWith("$ ls"))
-      {
-        // (no action required)
-      }
-      else if (line.StartsWith("$ cd .."))
-      {
-        HandleChangeDirectoryToParent();
-      }
-      else if (line.StartsWith("$ cd "))
-      {
-        HandleChangeDirectory(line);
-      }
-      else
-      {
-        HandleFileSystemItem(line);
-      }
+        case "$ cd /":
+          _current = _root;
+          break;
+        case "$ ls":
+          break;
+        case "$ cd ..":
+          HandleChangeDirectoryToParent();
+          break;
+        case string s when s.StartsWith("$ cd "):
+          HandleChangeDirectory(line);
+          break;
+        default:
+          HandleFileSystemItem(line);
+          break;
+      }      
     }
 
     return _root;
