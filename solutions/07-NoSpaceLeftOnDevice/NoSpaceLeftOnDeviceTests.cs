@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 namespace AdventOfCode2022.NoSpaceLeftOnDevice;
 
 public class NoSpaceLeftOnDeviceTests : IClassFixture<InputFilesFixture>
@@ -60,7 +58,7 @@ public class NoSpaceLeftOnDeviceTests : IClassFixture<InputFilesFixture>
       .OrderBy(dir => dir.Size)
       .First();
 
-    directoryToDelete.Size.Should().Be(24933642);
+    directoryToDelete.Size.Should().Be(1815525);
   }
 }
 
